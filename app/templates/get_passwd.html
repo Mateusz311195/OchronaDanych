@@ -1,0 +1,14 @@
+<html>
+<body>
+<h3> Podaj hasło do odkodowania notatki: </h3>
+<form action={{ url_for('get_passwd') }} method="post">
+  <label for="password">Password: </label>
+  <input type="password" id="note_password" name="note_password">
+  <input type="submit" value="Submit">
+</form>
+
+<form action={{ url_for('hello') }}>
+    <input type="submit" value="Go back" />
+
+</body>
+</html>

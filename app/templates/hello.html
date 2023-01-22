@@ -1,0 +1,73 @@
+<html>
+<body>
+<h1>Hello, you are logged in as {{ username }}!</h1>
+
+<form action={{ url_for('render') }} method="post">
+
+  <h3>Text style cheat sheet:</h3>
+  <ul>
+  <li><strong>Bold</strong> **Text**</li>
+  <li><em>Italic</em>: *Text*</li>
+  <li>Heading: #Text   (Use more '#' for different heading)</li>
+  <li>Reference: [Name](url)</li>
+  <li>Image: ![](imageUrl.png "Title")</li>
+  </ul>
+
+  <input type="checkbox" id="shared" name="shared" value="true">
+  <label for="shared">Share</label><br>
+  <label for="markdown">Input some markdown:</label><br>
+  <textarea id="markdown" name="markdown" rows="20" cols="100"></textarea>
+  <br>
+  <input type="submit" value="Submit">
+  <label for="note_password">Note password: </label>
+  <input type="password" id="note_password" name="note_password"><br>
+</form>
+
+
+{% if notes|length > 0 %}
+<h1> Your notes: </h1>
+<ul>
+{% for note in notes %}
+  <li>
+    <a href="{{ url_for('render') }}/{{note.0}}">
+      Note {{ loop.index }}
+    </a>
+  </li>
+{% endfor %}
+</ul>
+
+{% endif %}
+
+{% if protected_notes|length > 0 %}
+<h1> Your protected notes: </h1>
+<ul>
+{% for note in protected_notes %}
+  <li>
+    <form action={{ url_for('render') }}/{{note.0}}>
+      Note {{ loop.index }} Protected<br>
+      </a>
+      <label for="note_password{{note.0}}"> Unlock: </label>
+      <input type="submit" value="Unlock" />
+    </form>
+  </li>
+{% endfor %}
+</ul>
+
+{% endif %}
+
+{% if shared_notes|length > 0 %}
+<h1> Shared notes: </h1>
+<ul>
+{% for shared_note in shared_notes %}
+  <li><a href="{{ url_for('render') }}/{{shared_note.0}}"> Note {{ loop.index }}</a></li>
+{% endfor %}
+</ul>
+
+{% endif %}
+
+
+<form action={{ url_for('logout') }}>
+  <input type="submit" value="Log out" />
+</form>
+</body>
+</html>
